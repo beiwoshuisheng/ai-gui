@@ -18,14 +18,22 @@ class VisionAnalyzer:
         Args:
             api_endpoint: OpenClaw 视觉 API 端点
         """
-        # 默认配置
-        self.api_endpoint = api_endpoint or "http://localhost:18789/api/v1/vision/analyze"
-        self.model = "qwen-vl-max"  # 或其他视觉大模型
+        # 从独立配置文件读取（不影响 OpenClaw 主配置）
+        from vision_config import get_vision_config
+        config = get_vision_config()
         
-        # 从环境变量读取配置
-        import os
-        self.api_key = os.getenv('OPENCLAW_API_KEY', '')
-        self.timeout = int(os.getenv('AI_GUI_TIMEOUT', '10'))
+        # 使用配置
+        self.model = config.get('model', 'qwen-vl-max')
+        self.api_key = config.get('api_key', '')
+        self.timeout = config.get('timeout', 10000) / 1000  # 转换为秒
+        
+        # API 端点
+        if api_endpoint:
+            self.api_endpoint = api_endpoint
+        else:
+            base_url = config.get('base_url', 'https://coding.dashscope.aliyuncs.com/v1')
+            endpoint = config.get('endpoint', '/api/v1/vision/analyze')
+            self.api_endpoint = base_url.rstrip('/') + endpoint
     
     def screenshot_to_base64(self, screenshot) -> str:
         """将截图转换为 Base64"""
