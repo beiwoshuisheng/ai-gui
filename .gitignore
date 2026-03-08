@@ -1,0 +1,10 @@
+# AI Skills
+*.pyc
+__pycache__/
+*.db
+*.log
+.env
+.vscode/
+.idea/
+dist/
+build/

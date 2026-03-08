@@ -1,0 +1,97 @@
+---
+name: ai-gui
+version: 2.0.0
+description: "AI 驱动的桌面 GUI 控制 - 大模型视觉识别 + 人机协同 + 数据驱动标注"
+author: OpenClaw Community
+license: MIT
+tags:
+  - ai
+  - gui
+  - automation
+  - vision
+  - desktop
+
+requirements:
+  - pyautogui>=0.9.54
+
+environment:
+  AI_GUI_ANNOTATION: "false (optional: true to enable annotation)"
+
+usage:
+  basic: |
+    python ai_gui_simple.py click "登录按钮"
+  
+  with_annotation: |
+    AI_GUI_ANNOTATION=true python ai_gui_simple.py click "按钮"
+
+features:
+  - "AI 视觉识别 - 说人话控制电脑"
+  - "人机协同 - 低置信度时询问用户"
+  - "独立标注 - 可选数据收集，越用越聪明"
+  - "简洁设计 - 100 行代码，1 个依赖"
+
+examples:
+  - name: "点击按钮"
+    command: 'python ai_gui_simple.py click "登录按钮"'
+  
+  - name: "启用标注收集"
+    command: 'AI_GUI_ANNOTATION=true python ai_gui_simple.py click "按钮"'
+  
+  - name: "导出标注数据"
+    command: 'python annotation_simple.py export training.jsonl'
+
+documentation:
+  - "README.md - 快速开始"
+  - "ANNOTATION_DESIGN.md - 标注系统设计"
+
+changelog:
+  v2.0.0:
+    - "简洁重构 - 主程序仅 100 行"
+    - "标注独立 - 可选模块，不影响运行"
+    - "透明收集 - 用户完全控制"
+  
+  v1.0.0:
+    - "初始版本 - AI 驱动 GUI 控制"
+---
+
+# AI-GUI Skill
+
+让 AI 看懂屏幕，用自然语言控制电脑。
+
+## 快速开始
+
+```bash
+# 安装依赖
+pip install -r requirements.txt
+
+# 使用
+python ai_gui_simple.py click "登录按钮"
+```
+
+## 核心特性
+
+- 🎯 **AI 视觉识别** - 说"登录按钮"就能找到
+- 🤝 **人机协同** - 不确定时询问用户
+- 📊 **数据驱动** - 可选标注收集，越用越聪明
+- ✨ **简洁设计** - 100 行代码，5 分钟上手
+
+## 标注系统（可选）
+
+默认关闭标注收集。启用：
+
+```bash
+AI_GUI_ANNOTATION=true python ai_gui_simple.py click "按钮"
+```
+
+详情见 [ANNOTATION_DESIGN.md](ANNOTATION_DESIGN.md)
+
+## 隐私保护
+
+- ✅ 默认关闭标注
+- ✅ 数据本地存储
+- ✅ 用户完全控制
+- ✅ 可随时删除
+
+---
+
+_简洁而不简单，智能而透明_ 🦞
