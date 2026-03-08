@@ -31,6 +31,20 @@ def simple_click(target_description: str, auto_confirm: bool = False) -> bool:
     """
     print(f"🔍 识别：{target_description}")
     
+    # 0. 检查屏幕校准
+    try:
+        from screen_calibrator import get_calibrator
+        calibrator = get_calibrator()
+        calibration = calibrator.load_calibration()
+        
+        # 如果是首次使用，提示校准
+        if calibration.get('x_scale') == 1.0 and calibration.get('y_scale') == 1.0:
+            print(f"⚠️  建议先进行屏幕校准以获得更准确的结果")
+            print(f"   运行：python3 screen_calibrator.py calibrate")
+            print(f"")
+    except:
+        pass  # 校准可选，不影响使用
+    
     # 1. 截图
     screenshot = pyautogui.screenshot()
     

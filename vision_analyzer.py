@@ -52,6 +52,9 @@ class VisionAnalyzer:
         Returns:
             识别结果：{'found': bool, 'x': int, 'y': int, 'confidence': float}
         """
+        # 获取截图尺寸
+        screenshot_width, screenshot_height = screenshot.size
+        
         # 转换为 Base64
         image_b64 = self.screenshot_to_base64(screenshot)
         
@@ -106,7 +109,24 @@ class VisionAnalyzer:
                 
                 # 解析 JSON 输出
                 import json
-                return json.loads(answer)
+                parsed_result = json.loads(answer)
+                
+                # 坐标校准（如果识别成功）
+                if parsed_result.get('found') and 'x' in parsed_result and 'y' in parsed_result:
+                    from screen_calibrator import get_calibrator
+                    calibrator = get_calibrator()
+                    
+                    # 转换坐标到实际屏幕
+                    calibrated_x, calibrated_y = calibrator.convert_coordinates(
+                        parsed_result['x'],
+                        parsed_result['y']
+                    )
+                    
+                    parsed_result['x'] = calibrated_x
+                    parsed_result['y'] = calibrated_y
+                    parsed_result['calibrated'] = True
+                
+                return parsed_result
             else:
                 print(f"API 调用失败：{response.status_code}")
                 return None
