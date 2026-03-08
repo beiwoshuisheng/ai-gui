@@ -79,17 +79,10 @@ def ai_find(target: str, screenshot) -> dict:
     """
     AI 识别目标
     
-    简化实现，实际调用大模型 API
+    调用视觉分析模块
     """
-    # TODO: 调用 OpenClaw 视觉 API
-    # 这里返回模拟数据
-    return {
-        'found': True,
-        'x': 500,
-        'y': 300,
-        'confidence': 0.85,
-        'description': f"找到：{target}"
-    }
+    from vision_analyzer import ai_find as vision_ai_find
+    return vision_ai_find(target, screenshot)
 
 
 # ========== 命令行接口 ==========
